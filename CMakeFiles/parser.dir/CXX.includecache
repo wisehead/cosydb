@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/chenhui/goodcoder/./parser.h
+iostream
+-
+stdio.h
+-
+string
+-
+string.h
+-
+vector
+-
+map
+-
+
+/home/chenhui/goodcoder/parser.cpp
+./parser.h
+/home/chenhui/goodcoder/./parser.h
+fstream
+-
+stdlib.h
+-
+fnmatch.h
+-
+

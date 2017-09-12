@@ -1,0 +1,6 @@
+int
+float
+char*
+UdtBool
+int[5]
+UdtUser
