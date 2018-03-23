@@ -17,7 +17,7 @@ using std::string;
 using std::cout;
 using std::endl;
 
-namespace goodcoder {
+namespace cosydb {
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
         TypeName(const TypeName&); \
         TypeName& operator=(const TypeName&)
@@ -201,4 +201,4 @@ private:
     DISALLOW_COPY_AND_ASSIGN(Parser);
 };
 
-}//namespace goodcoder
+}//namespace cosydb 

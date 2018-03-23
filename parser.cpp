@@ -10,12 +10,24 @@
 #include <fstream>
 #include <stdlib.h>
 #include <fnmatch.h>
+#include <netinet/in.h>    // for sockaddr_in
+#include <sys/types.h>    // for socket
+#include <sys/socket.h>    // for socket
+#include <arpa/inet.h>
+#include <stdio.h>        // for printf
+#include <stdlib.h>        // for exit
+#include <string.h>        // for bzero
+#include <fcntl.h>
+#include <unistd.h>
+
 // the file to be parsed.
 const char filename[] = "a.in";
 
-namespace goodcoder{
+namespace cosydb{
 
 const char table_def_file[] = "TableDef.txt";
+#define HELLO_WORLD_SERVER_PORT    6666 
+#define LENGTH_OF_LISTEN_QUEUE 20
 //------------------------------------------------------------------------------
 // parse the user defined type UdtBool.
 int UdtBool::parse(string str) {
@@ -329,10 +341,70 @@ int Parser::parse_line(string line) {
     return parse_low(line, tab, col_count);
 }
 
-}//namespace goodcoder
+}//namespace cosydb 
 //------------------------------------------------------------------------------
 int main() {
-    goodcoder::Parser parser;
+    //设置一个socket地址结构server_addr,代表服务器internet地址, 端口
+    struct sockaddr_in server_addr;
+    bzero(&server_addr, sizeof(server_addr)); //把一段内存区的内容全部设置为0
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = htons(INADDR_ANY);
+    server_addr.sin_port = htons(HELLO_WORLD_SERVER_PORT);
+    //server_addr.sin_port = htons(g_ids_server_port);
+    //log_msg(LEVEL_INFO, "Server Bind Port : %d .\n", g_ids_server_port); 
+    printf("Server Bind Port : %d .\n", HELLO_WORLD_SERVER_PORT); 
+
+    //创建用于internet的流协议(TCP)socket,用server_socket代表服务器socket
+    int server_socket = socket(AF_INET, SOCK_STREAM, 0); 
+    if (server_socket < 0)
+    {   
+        //log_msg(LEVEL_INFO, "Create Socket Failed!");
+        printf("Create Socket Failed!");
+        exit(1);
+    }   
+    
+    //把socket和socket地址结构联系起来
+    if (bind(server_socket, (struct sockaddr*)&server_addr, sizeof(server_addr)))
+    {   
+        //log_msg(LEVEL_INFO, "Server Bind Port : %d Failed!", g_ids_server_port); 
+        printf("Server Bind Port : %d Failed!", HELLO_WORLD_SERVER_PORT); 
+        exit(1);
+    }   
+    
+    //server_socket用于监听
+    if (listen(server_socket, LENGTH_OF_LISTEN_QUEUE))
+    {   
+        //log_msg(LEVEL_INFO, "Server Listen Failed!"); 
+        printf("Server Listen Failed!"); 
+        exit(1);
+    }  
+    while(1)
+    {
+        struct sockaddr_in client_addr;
+        socklen_t length = sizeof(client_addr);
+
+        // accept a new connection if its valid, otherwise suspend here.
+        // new_server_socket is the socket that can be used for communication.
+        //int new_server_socket = accept(server_socket, (struct sockaddr*)&client_addr, &length);
+        int new_server_socket = accept(server_socket, (struct sockaddr*)NULL, NULL);
+        if (new_server_socket < 0)
+        {
+            //log_msg(LEVEL_INFO, "Server Accept Failed!\n");
+            printf("Server Accept Failed!\n");
+            break;
+        }
+
+        getpeername(new_server_socket, (struct sockaddr *)&client_addr, &length);
+        char peer_ip_addr[16];
+        printf("connected peer address = %s:%d\n", 
+                inet_ntop(AF_INET, &client_addr.sin_addr, peer_ip_addr, sizeof(peer_ip_addr)), 
+                ntohs(client_addr.sin_port));
+        // create an enqueue_thread for a new connection.
+    }
+    //close the listen socket
+    close(server_socket);
+	/*
+    cosydb::Parser parser;
     parser.get_table_def().init();
     std::ifstream in(filename);
 
@@ -343,6 +415,7 @@ int main() {
             return -1;
         }
     }
+	*/
 
 }
 //-------------------------------------------------------------------------------
