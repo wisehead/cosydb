@@ -124,9 +124,30 @@ int main(int argc, char **argv)
         snprintf(file_name, FILE_NAME_MAX_SIZE, "%s", buffer);
         printf("%s\n", file_name);  
 
-        printf("closing fp and socket.\n");
+        //printf("closing fp and socket.\n");
+        //close(client_socket);  
+		while(1)
+		{
+			string str_cmd;
+			cout<<"cosydb> ";
+			getline(cin, str_cmd);
+			cout<<str_cmd<<endl;
+			bzero(buffer, BUFFER_SIZE);
+			snprintf(buffer, BUFFER_SIZE, "%s", str_cmd.c_str());
+			if (send(client_socket, buffer, BUFFER_SIZE, 0) < 0)  
+			{  
+				if (errno != 0)
+				{
+					printf("send errno is:%d\n", errno);
+					errno = 0;
+				}
+				printf("Send command:\t%s Failed\n", str_cmd.c_str());  
+				break;  
+			} 
+			//sleep(1);
+		}
+        printf("closing socket.\n");
         close(client_socket);  
-        sleep(RECONNECT_TIME);
         //goto retry;
     }  
 Exit:

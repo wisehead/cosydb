@@ -408,6 +408,14 @@ int main() {
 		// send the file name of the davinci log to IDS Agent
 		printf("sending file name: %s On Server...\n", buffer);  
 		send(new_server_socket, buffer, BUFFER_SIZE, 0);
+
+		bzero(buffer, BUFFER_SIZE);
+		length = recv(new_server_socket, buffer, BUFFER_SIZE, 0);
+        if(length <= 0)  
+        {  
+            printf("errno is:%d!\n", errno); 
+		}
+		printf("received cmd is:%s\n", buffer);
     }
     //close the listen socket
     close(server_socket);
