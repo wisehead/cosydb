@@ -6,7 +6,7 @@
  * Source file, this file implements the parser functionality.
  * Created Time: 2018/03/22-15:39                                    
  *******************************************************************************/
-#include "./parser.h"
+#include "./cosydb.h"
 #include <fstream>
 #include <stdlib.h>
 #include <fnmatch.h>
