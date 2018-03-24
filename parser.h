@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Copyright 2015 Baidu Inc. All Rights Reserved.
- * Author: Hui Chen (chenhui13@baidu.com)
+ * Copyright 2018 no Inc. All Rights Reserved.
+ * Author: Hui Chen (alex.chenhui@gmail.com)
  *
  * File Name: parser.h                                               
  * Header file.
- * Created Time: 2015/07/31-15:39                                    
+ * Created Time: 2018/03/22-15:39                                    
  *******************************************************************************/
 #include <iostream>
 #include <stdio.h>

@@ -1,0 +1,27 @@
+把parser从命令行模式，改成服务器模式。会常驻内存，实现socket server。
+
+cosydb的客户端可以和cosydb server进行通信。
+
+接下来需要实现一套通信协议。不过暂时不着急。框架已经写好了。
+
+截个图看看。
+
+server侧：
+
+➜ cosydb git:(master) ✗ ./parser
+
+Server Bind Port : 6666 .
+
+connected peer address = 127.0.0.1:53293
+
+sending file name: haha.txt On Server...
+
+client侧：
+
+➜ cosydb git:(master) ✗ ./cosydb
+
+Connecting to IDS server:127.0.0.1
+
+haha.txt
+
+closing fp and socket.

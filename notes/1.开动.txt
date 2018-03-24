@@ -1,0 +1,15 @@
+一
+、开动
+GitBook allows you to organize your book into chapters, each chapter is stored in a separate file like this one.
+
+想要做关系数据库，一要支持SQL，二要支持事务。这两个都比较复杂。
+
+比较可行的做法是，从noSQL做起，只使用文件实现一个最简单的存储，然后一步一步加。
+
+--1.支持读操作。
+
+--2.支持写操作。
+
+--3.支持随机写。
+
+--4.提供schema支持。

@@ -1,7 +1,7 @@
 /*******************************************************************************
  *      file name: dbclient.cpp                                               
  *         author: Hui Chen. (c) 18                             
- *           mail: chenhui13@baidu.com                                        
+ *           mail: alex.chenhui@gmail.com                                        
  *   created time: 18/03/23- 3:03                                    
  *  modified time: 18/03/23- 3:03                                    
  *******************************************************************************/
