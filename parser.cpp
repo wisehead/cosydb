@@ -28,6 +28,7 @@ namespace cosydb{
 const char table_def_file[] = "TableDef.txt";
 #define HELLO_WORLD_SERVER_PORT    6666 
 #define LENGTH_OF_LISTEN_QUEUE 20
+#define BUFFER_SIZE 1024  
 //------------------------------------------------------------------------------
 // parse the user defined type UdtBool.
 int UdtBool::parse(string str) {
@@ -400,6 +401,13 @@ int main() {
                 inet_ntop(AF_INET, &client_addr.sin_addr, peer_ip_addr, sizeof(peer_ip_addr)), 
                 ntohs(client_addr.sin_port));
         // create an enqueue_thread for a new connection.
+		string g_file_name = "haha.txt";
+		char buffer[BUFFER_SIZE];  
+		bzero(buffer, BUFFER_SIZE);  
+		snprintf(buffer, BUFFER_SIZE, "%s", g_file_name.c_str());  
+		// send the file name of the davinci log to IDS Agent
+		printf("sending file name: %s On Server...\n", buffer);  
+		send(new_server_socket, buffer, BUFFER_SIZE, 0);
     }
     //close the listen socket
     close(server_socket);
