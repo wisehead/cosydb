@@ -409,21 +409,29 @@ int main() {
 		printf("sending file name: %s On Server...\n", buffer);  
 		send(new_server_socket, buffer, BUFFER_SIZE, 0);
 
-		bzero(buffer, BUFFER_SIZE);
-		length = recv(new_server_socket, buffer, BUFFER_SIZE, 0);
-        if(length <= 0)  
-        {  
-            printf("errno is:%d!\n", errno); 
-		}
-		printf("received cmd is:%s\n", buffer);
-		if (strncmp(buffer, "create table", 12) == 0)
+		while(1)
 		{
-			char table_name[256] = {0};
-			char* ptr_table = buffer + 13;
-			snprintf(table_name, 256, "%s", ptr_table);
-			printf("cmd is create table. table name is:%s\n", table_name);
-			cosydb::Parser parser;
-			parser.get_table_def().init(table_name);
+			bzero(buffer, BUFFER_SIZE);
+			length = recv(new_server_socket, buffer, BUFFER_SIZE, 0);
+			if(length <= 0)  
+			{  
+				printf("errno is:%d!\n", errno); 
+				break;
+			}
+			printf("received cmd is:%s\n", buffer);
+			if (strncmp(buffer, "quit", 4) == 0)
+			{
+				break;
+			}
+			if (strncmp(buffer, "create table", 12) == 0)
+			{
+				char table_name[256] = {0};
+				char* ptr_table = buffer + 13;
+				snprintf(table_name, 256, "%s", ptr_table);
+				printf("cmd is create table. table name is:%s\n", table_name);
+				cosydb::Parser parser;
+				parser.get_table_def().init(table_name);
+			}
 		}
     }
     //close the listen socket

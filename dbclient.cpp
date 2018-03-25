@@ -144,6 +144,8 @@ int main(int argc, char **argv)
 				printf("Send command:\t%s Failed\n", str_cmd.c_str());  
 				break;  
 			} 
+			if (str_cmd.compare("quit") == 0)
+				goto Exit;
 			//sleep(1);
 		}
         printf("closing socket.\n");
