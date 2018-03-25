@@ -448,6 +448,23 @@ int main() {
 						return -1;
 					}
 				}
+				
+				char cmd_temp[100] = {0};
+				snprintf(cmd_temp, 100, "cp %s table1.ibd", file_name);
+				system(cmd_temp);
+			}
+			else if (strncmp(buffer, "select table", 12) == 0)
+			{
+				printf("cmd is select table.\n");
+				std::ifstream in("table1.ibd");
+
+				for (string line; getline(in, line); ) {
+					cout<<line<<endl;
+					if (parser.parse_line(line)) {
+						cout<<"main(): get error from parse_line."<<endl;
+						return -1;
+					}
+				}
 			}
 		}
     }
