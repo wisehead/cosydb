@@ -63,10 +63,10 @@ int main(int argc, char **argv)
 
     while(1)
     {
-        bzero(&client_addr, sizeof(client_addr)); //°ÑÒ»¶ÎÄÚ´æÇøµÄÄÚÈÝÈ«²¿ÉèÖÃÎª0  
-        client_addr.sin_family = AF_INET;    //internetÐ­Òé×å  
-        client_addr.sin_addr.s_addr = htons(INADDR_ANY);//INADDR_ANY±íÊ¾×Ô¶¯»ñÈ¡±¾»úµØÖ·  
-        client_addr.sin_port = htons(0);    //0±íÊ¾ÈÃÏµÍ³×Ô¶¯·ÖÅäÒ»¸ö¿ÕÏÐ¶Ë¿Ú  
+        bzero(&client_addr, sizeof(client_addr)); 
+        client_addr.sin_family = AF_INET; 
+        client_addr.sin_addr.s_addr = htons(INADDR_ANY);
+        client_addr.sin_port = htons(0);    
 
         client_socket = socket(AF_INET, SOCK_STREAM, 0);  
         if (client_socket < 0)  

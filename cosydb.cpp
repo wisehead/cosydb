@@ -408,6 +408,8 @@ int main() {
 		// send the file name of the davinci log to IDS Agent
 		printf("sending file name: %s On Server...\n", buffer);  
 		send(new_server_socket, buffer, BUFFER_SIZE, 0);
+		// define parser here is not very good. fix-me later!! 
+		cosydb::Parser parser;
 
 		while(1)
 		{
@@ -423,14 +425,29 @@ int main() {
 			{
 				break;
 			}
-			if (strncmp(buffer, "create table", 12) == 0)
+			else if (strncmp(buffer, "create table", 12) == 0)
 			{
 				char table_name[256] = {0};
 				char* ptr_table = buffer + 13;
 				snprintf(table_name, 256, "%s", ptr_table);
 				printf("cmd is create table. table name is:%s\n", table_name);
-				cosydb::Parser parser;
 				parser.get_table_def().init(table_name);
+			}
+			else if (strncmp(buffer, "insert table", 12) == 0)
+			{
+				char file_name[256] = {0};
+				char* ptr_file = buffer + 13;
+				snprintf(file_name, 256, "%s", ptr_file);
+				printf("cmd is insert table. file name is:%s\n", file_name);
+				std::ifstream in(file_name);
+
+				for (string line; getline(in, line); ) {
+					cout<<line<<endl;
+					if (parser.parse_line(line)) {
+						cout<<"main(): get error from parse_line."<<endl;
+						return -1;
+					}
+				}
 			}
 		}
     }
