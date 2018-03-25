@@ -1,0 +1,51 @@
+我想第一个命令是建表命令
+
+:create table -f tableDef.txt
+
+完成后，展现如下：
+
+client部分：
+
+➜ cosydb git:(master) ✗ cosydb
+
+Connecting to IDS server:127.0.0.1
+
+haha.txt
+
+cosydb> create table TableDef.txt
+
+create table TableDef.txt
+
+cosydb>
+
+server部分：
+
+➜ cosydb git:(master) ✗ ./cosydb.server
+
+Server Bind Port : 6666 .
+
+connected peer address = 127.0.0.1:55610
+
+sending file name: haha.txt On Server...
+
+received cmd is:create table TableDef.txt
+
+cmd is create table. table name is:TableDef.txt
+
+TABLE DEFINITION:
+
+int
+
+float
+
+char*
+
+UdtBool
+
+int[5]
+
+UdtUser
+
+第二个命令应该是insert命令，导入数据
+
+第三个命令是SELECT命令，查询数据。

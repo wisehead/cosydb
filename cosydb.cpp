@@ -25,7 +25,7 @@ const char filename[] = "a.in";
 
 namespace cosydb{
 
-const char table_def_file[] = "TableDef.txt";
+//const char table_def_file[] = "TableDef.txt";
 #define HELLO_WORLD_SERVER_PORT    6666 
 #define LENGTH_OF_LISTEN_QUEUE 20
 #define BUFFER_SIZE 1024  
@@ -153,7 +153,7 @@ bool Handler::is_this_type_supported(string type) {
 //------------------------------------------------------------------------------
 // read the table definition from the table_def_file, which is provided by user
 // to define the table struct.
-int TableDef::init() {
+int TableDef::init(const char* table_def_file) {
     std::ifstream in(table_def_file);
     cout<<"TABLE DEFINITION:"<<endl;
     cout<<"------------------------------"<<endl;
@@ -416,6 +416,15 @@ int main() {
             printf("errno is:%d!\n", errno); 
 		}
 		printf("received cmd is:%s\n", buffer);
+		if (strncmp(buffer, "create table", 12) == 0)
+		{
+			char table_name[256] = {0};
+			char* ptr_table = buffer + 13;
+			snprintf(table_name, 256, "%s", ptr_table);
+			printf("cmd is create table. table name is:%s\n", table_name);
+			cosydb::Parser parser;
+			parser.get_table_def().init(table_name);
+		}
     }
     //close the listen socket
     close(server_socket);

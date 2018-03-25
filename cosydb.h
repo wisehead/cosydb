@@ -178,7 +178,7 @@ public:
     TableDef():columns() {}
     ~TableDef() {}
 
-    int init();
+    int init(const char* table_def_file);
     int get_col_count();
     string get_type(int i);
     int check_and_get_array_def(string arr_str, string* ele_type, int* ele_count);
